@@ -5,13 +5,11 @@ import PaooGame.Items.Droppable;
 import PaooGame.Items.DroppableFactory;
 import PaooGame.Items.Goal;
 import PaooGame.Items.Hero;
-import PaooGame.RefLinks;
 import PaooGame.Maps.Map;
-import PaooGame.Settings.SettingsManager;
+import PaooGame.RefLinks;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /*! \class public class PlayState extends State
     \brief Implementeaza/controleaza jocul.
@@ -21,7 +19,6 @@ public class PlayState extends State
     private Hero hero;  /*!< Referinta catre obiectul animat erou (controlat de utilizator).*/
     private Map map;    /*!< Referinta catre harta curenta.*/
     private Goal level1;
-    private SettingsManager settingsManager = new SettingsManager();
     private ArrayList<Droppable> notes;
     private final DroppableFactory factory = new DroppableFactory();
 
@@ -38,8 +35,6 @@ public class PlayState extends State
         map = new Map();
             ///Referinta catre harta construita este setata si in obiectul shortcut pentru a fi accesibila si in alte clase ale programului.
         refLink.SetMap(map);
-        settingsManager.setManager(refLink.GetKeyManager());
-        refLink.setSettingsManager(settingsManager);
         notes = new ArrayList<>(6);
         level1 = new Goal(Assets.lvl1sheet);
         level1.addTarget("Do");
@@ -66,9 +61,7 @@ public class PlayState extends State
     @Override
 
     public void Update() {
-        if (settingsManager.isGamePaused()) {
-            State.SetState(refLink.GetGame().getPausedState());
-        }
+        
         if (!updateBlocked) {
             hero.Update();
 

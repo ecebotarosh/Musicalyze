@@ -1,11 +1,11 @@
 package PaooGame.Items;
 
+import PaooGame.Graphics.Assets;
+import PaooGame.RefLinks;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
-import PaooGame.RefLinks;
-import PaooGame.Graphics.Assets;
 
 /*! \class public class Hero extends Character
     \brief Implementeaza notiunea de erou/player (caracterul controlat de jucator).
@@ -132,13 +132,12 @@ public class Hero extends Character
             g.drawImage(displayedHP.get(i), 50+i*50, 570, displayedHP.get(i).getWidth()/4, displayedHP.get(i).getHeight()/4, null);
         }
         g.setFont(Assets.font);
-        FontMetrics metrics = g.getFontMetrics(Assets.font);
         // Determine the X coordinate for the text
         int str_x = 800;
         // Determine the Y coordinate for the text (note we add the ascent, as in java 2d 0 is top of the screen)
         //int str_y = (int)y + ((image.getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
         int str_y = 550;
-        g.drawString("Score : " + String.valueOf(score), str_x, str_y);
+        g.drawString("Score : " + score, str_x, str_y);
             ///doar pentru debug daca se doreste vizualizarea dreptunghiului de coliziune altfel se vor comenta urmatoarele doua linii
         /*g.setColor(Color.blue);
         g.fillRect((int)(x + bounds.x), (int)(y + bounds.y), bounds.width, bounds.height);*/
@@ -162,5 +161,10 @@ public class Hero extends Character
     public int getHP()
     {
         return this.HP;
+    }
+
+    public int getScore()
+    {
+        return this.score;
     }
 }
