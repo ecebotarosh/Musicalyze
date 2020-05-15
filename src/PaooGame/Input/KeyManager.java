@@ -2,6 +2,7 @@ package PaooGame.Input;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.security.Key;
 
 /*! \class public class KeyManager implements KeyListener
     \brief Gestioneaza intrarea (input-ul) de tastatura.
@@ -13,8 +14,7 @@ import java.awt.event.KeyListener;
 public class KeyManager implements KeyListener
 {
     private boolean[] keys; /*!< Vector de flaguri pentru toate tastele. Tastele vor fi regasite dupa cod [0 - 255]*/
-    public boolean up;      /*!< Flag pentru tasta "sus" apasata.*/
-    public boolean down;    /*!< Flag pentru tasta "jos" apasata.*/
+    public boolean pause;
     public boolean left;    /*!< Flag pentru tasta "stanga" apasata.*/
     public boolean right;   /*!< Flag pentru tasta "dreapta" apasata.*/
 
@@ -30,9 +30,9 @@ public class KeyManager implements KeyListener
 
     public void Update()
     {
-
         left  = keys[KeyEvent.VK_LEFT];
         right = keys[KeyEvent.VK_RIGHT];
+        pause = keys[KeyEvent.VK_P];
     }
 
     /*! \fn public void keyPressed(KeyEvent e)
@@ -64,8 +64,8 @@ public class KeyManager implements KeyListener
         Momentan aceasta functie nu este utila in program.
      */
     @Override
-    public void keyTyped(KeyEvent e)
-    {
+    public void keyTyped(KeyEvent e) {
 
     }
+
 }

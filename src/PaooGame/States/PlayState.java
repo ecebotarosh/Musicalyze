@@ -7,6 +7,7 @@ import PaooGame.Items.Goal;
 import PaooGame.Items.Hero;
 import PaooGame.RefLinks;
 import PaooGame.Maps.Map;
+import PaooGame.Settings.SettingsManager;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -20,9 +21,9 @@ public class PlayState extends State
     private Hero hero;  /*!< Referinta catre obiectul animat erou (controlat de utilizator).*/
     private Map map;    /*!< Referinta catre harta curenta.*/
     private Goal level1;
+    private SettingsManager settingsManager = new SettingsManager();
     private ArrayList<Droppable> notes;
     private final DroppableFactory factory = new DroppableFactory();
-    private Iterator<Droppable> it;
 
     /*! \fn public PlayState(RefLinks refLink)
         \brief Constructorul de initializare al clasei
@@ -37,6 +38,8 @@ public class PlayState extends State
         map = new Map();
             ///Referinta catre harta construita este setata si in obiectul shortcut pentru a fi accesibila si in alte clase ale programului.
         refLink.SetMap(map);
+        settingsManager.setManager(refLink.GetKeyManager());
+        refLink.setSettingsManager(settingsManager);
         notes = new ArrayList<>(6);
         level1 = new Goal(Assets.lvl1sheet);
         level1.addTarget("Do");
@@ -62,61 +65,53 @@ public class PlayState extends State
      */
     @Override
 
-    public void Update()
-    {
-        hero.Update();
+    public void Update() {
+        if (settingsManager.isGamePaused()) {
+            State.SetState(refLink.GetGame().getPausedState());
+        }
+        if (!updateBlocked) {
+            hero.Update();
 
-        for(int i=0; i<notes.size(); ++i)
-        {
-            Droppable note = notes.get(i);
-            for (Droppable anotherNote : notes) {
-                if (note.getRectangle().intersects(anotherNote.getRectangle()) && anotherNote != note && anotherNote.getY() < 0)
-                {
-                    note.Init();
-                    anotherNote.Init();
+            for (int i = 0; i < notes.size(); ++i) {
+                Droppable note = notes.get(i);
+                for (Droppable anotherNote : notes) {
+                    if (note.getRectangle().intersects(anotherNote.getRectangle()) && anotherNote != note && anotherNote.getY() < 0) {
+                        note.Init();
+                        anotherNote.Init();
+                    }
                 }
-             }
-            note.Update();
-            if (hero.getRectangle().intersects(note.getRectangle()) )
-            {
-                if (note.getY() < hero.getY())
-                {
-                    System.out.println("Got an intersection!");
-                    System.out.println(note.getPayload());
-                    if (note.getPayload().equalsIgnoreCase("Bomb")) {
-                        System.out.println("Got a bomb! Have to die now!");
-                        hero.die();
-                    }
-                    else if(note.getPayload().equalsIgnoreCase("Bonus"))
-                    {
-                        System.out.println("COME GET HEALED!");
-                        hero.heal();
-                        hero.grantPoints(100);
-                    }
-                    else if (level1.isNeededPayload(note.getPayload()))
-                    {
-                        hero.grantPoints(300);
-                        if (level1.goalReached())
-                        {
-                            System.out.println("Game finished!");
+                note.Update();
+                if (hero.getRectangle().intersects(note.getRectangle())) {
+                    if (note.getY() < hero.getY()) {
+                        System.out.println("Got an intersection!");
+                        System.out.println(note.getPayload());
+                        if (note.getPayload().equalsIgnoreCase("Bomb")) {
+                            System.out.println("Got a bomb! Have to die now!");
+                            hero.die();
+                        } else if (note.getPayload().equalsIgnoreCase("Bonus")) {
+                            System.out.println("COME GET HEALED!");
+                            hero.heal();
+                            hero.grantPoints(100);
+                        } else if (level1.isNeededPayload(note.getPayload())) {
+                            hero.grantPoints(300);
+                            if (level1.goalReached()) {
+                                System.out.println("Game finished!");
+                            }
+                        } else {
+                            hero.takeDamage();
+                            hero.grantPoints(-50);
                         }
+                        notes.set(i, factory.generate(refLink, Assets.possiblePayloads.get(refLink.getRNG().nextInt(Assets.possiblePayloads.size()))));
                     }
-                    else {
-                        hero.takeDamage();
-                        hero.grantPoints(-50);
-                    }
-                    notes.set(i, factory.generate(refLink, Assets.possiblePayloads.get(refLink.getRNG().nextInt(Assets.possiblePayloads.size()))));
-                }
-                if (hero.isDead())
-                {
-                        hero.grantPoints(hero.getHP()*200);
+                    if (hero.isDead()) {
+                        hero.grantPoints(hero.getHP() * 200);
                         System.out.println("KBOOM, URDEAD!");
                         refLink.GetGame().StopGame();
+                    }
                 }
-            }
-            if(note.getY()>refLink.GetHeight()-200)
-            {
-                notes.set(i, factory.generate(refLink, Assets.possiblePayloads.get(refLink.getRNG().nextInt(Assets.possiblePayloads.size()))));
+                if (note.getY() > refLink.GetHeight() - 200) {
+                    notes.set(i, factory.generate(refLink, Assets.possiblePayloads.get(refLink.getRNG().nextInt(Assets.possiblePayloads.size()))));
+                }
             }
         }
     }
@@ -128,14 +123,14 @@ public class PlayState extends State
         \param g Contextul grafic in care trebuie sa deseneze starea jocului pe ecran.
      */
     @Override
-    public void Draw(Graphics g)
-    {
-        map.Draw(g);
-        hero.Draw(g);
-        level1.Draw(g);
-        for(Droppable note: notes)
-        {
-            note.Draw(g);
+    public void Draw(Graphics g) {
+        if (!drawBlocked) {
+            map.Draw(g);
+            hero.Draw(g);
+            level1.Draw(g);
+            for (Droppable note : notes) {
+                note.Draw(g);
+            }
         }
     }
 }

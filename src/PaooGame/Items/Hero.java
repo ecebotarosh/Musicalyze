@@ -115,6 +115,7 @@ public class Hero extends Character
         {
             xMove = speed;
         }
+
     }
 
     /*! \fn public void Draw(Graphics g)

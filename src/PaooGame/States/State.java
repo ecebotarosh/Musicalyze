@@ -20,6 +20,8 @@ public abstract class State
     {
         this.refLink = refLink;
     }
+    protected boolean updateBlocked=true;
+    protected boolean drawBlocked=true;
 
     /*! \fn public static void SetState(State state)
         \brief Seteaza starea curenta a jocului.
@@ -29,7 +31,13 @@ public abstract class State
     public static void SetState(State state)
     {
         previousState = currentState;
+        if(previousState!=null) {
+            previousState.blockDraw();
+            previousState.blockUpdate();
+        }
         currentState = state;
+        currentState.unblockDraw();
+        currentState.unblockUpdate();
     }
 
     public static State GetState()
@@ -41,4 +49,26 @@ public abstract class State
     public abstract void Update();
         ///Metoda abstracta destinata desenarii starii curente
     public abstract void Draw(Graphics g);
+
+    public static State GetPreviousState(){ return previousState; }
+
+    public void unblockUpdate()
+    {
+        updateBlocked=false;
+    }
+
+    public void blockUpdate()
+    {
+        updateBlocked=true;
+    }
+
+    public void unblockDraw()
+    {
+        drawBlocked=false;
+    }
+
+    public void blockDraw()
+    {
+        drawBlocked=true;
+    }
 }

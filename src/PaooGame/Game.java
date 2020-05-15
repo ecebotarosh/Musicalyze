@@ -61,12 +61,12 @@ public class Game implements Runnable
     ///                 ****************          *****************        ***************
 
     private Graphics        g;          /*!< Referinta catre un context grafic.*/
-
         ///Available states
     private State playState;            /*!< Referinta catre joc.*/
     private State menuState;            /*!< Referinta catre menu.*/
     private State settingsState;        /*!< Referinta catre setari.*/
     private State aboutState;           /*!< Referinta catre about.*/
+    private State pausedState;
     private KeyManager keyManager;      /*!< Referinta catre obiectul care gestioneaza intrarile din partea utilizatorului.*/
     private RefLinks refLink;            /*!< Referinta catre un obiect a carui sarcina este doar de a retine diverse referinte pentru a fi usor accesibile.*/
 
@@ -220,13 +220,14 @@ public class Game implements Runnable
     {
             ///Determina starea tastelor
         keyManager.Update();
-        ///Trebuie obtinuta starea curenta pentru care urmeaza a se actualiza starea, atentie trebuie sa fie diferita de null.
-        if(State.GetState() != null)
-        {
+            ///Trebuie obtinuta starea curenta pentru care urmeaza a se actualiza starea, atentie trebuie sa fie diferita de null.
+            if (State.GetState() != null) {
                 ///Actualizez starea curenta a jocului daca exista.
-            State.GetState().Update();
-        }
+                State.GetState().Update();
+            }
     }
+
+
 
     /*! \fn private void Draw()
         \brief Deseneaza elementele grafice in fereastra coresponzator starilor actualizate ale elementelor.
@@ -297,6 +298,26 @@ public class Game implements Runnable
     public KeyManager GetKeyManager()
     {
         return keyManager;
+    }
+
+    public boolean getState()
+    {
+        return this.runState;
+    }
+
+    public State getAboutState()
+    {
+        return this.aboutState;
+    }
+
+    public State getPlayState()
+    {
+        return this.playState;
+    }
+
+    public State getPausedState()
+    {
+        return this.pausedState;
     }
 }
 

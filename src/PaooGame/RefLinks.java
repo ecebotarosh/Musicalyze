@@ -3,6 +3,7 @@ package PaooGame;
 import PaooGame.Maps.Map;
 
 import PaooGame.Input.KeyManager;
+import PaooGame.Settings.SettingsManager;
 
 import java.util.Random;
 
@@ -15,6 +16,7 @@ public class RefLinks
 {
     private Game game;          /*!< Referinta catre obiectul Game.*/
     private Map map;            /*!< Referinta catre harta curenta.*/
+    private SettingsManager settingsManager;
     private Random r = new Random(System.currentTimeMillis());
 
     /*! \fn public RefLinks(Game game)
@@ -90,5 +92,14 @@ public class RefLinks
     public Random getRNG()
     {
         return this.r;
+    }
+
+    public SettingsManager getSettingsManager() {
+        return settingsManager;
+    }
+
+    public void setSettingsManager(SettingsManager settingsManager)
+    {
+        this.settingsManager=settingsManager;
     }
 }
