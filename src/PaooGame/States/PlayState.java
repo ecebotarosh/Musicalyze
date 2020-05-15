@@ -91,19 +91,25 @@ public class PlayState extends State
                     {
                         System.out.println("COME GET HEALED!");
                         hero.heal();
+                        hero.grantPoints(100);
                     }
                     else if (level1.isNeededPayload(note.getPayload()))
                     {
+                        hero.grantPoints(300);
                         if (level1.goalReached())
                         {
                             System.out.println("Game finished!");
                         }
                     }
-                    else { hero.takeDamage(); }
+                    else {
+                        hero.takeDamage();
+                        hero.grantPoints(-50);
+                    }
                     notes.set(i, factory.generate(refLink, Assets.possiblePayloads.get(refLink.getRNG().nextInt(Assets.possiblePayloads.size()))));
                 }
                 if (hero.isDead())
                 {
+                        hero.grantPoints(hero.getHP()*200);
                         System.out.println("KBOOM, URDEAD!");
                         refLink.GetGame().StopGame();
                 }
