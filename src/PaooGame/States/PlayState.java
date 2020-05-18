@@ -7,6 +7,7 @@ import PaooGame.Items.Goal;
 import PaooGame.Items.Hero;
 import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
+import PaooGame.Settings.Difficulty;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class PlayState extends State
         level1.addTarget("Do");
         for(int i=0; i<6; ++i)
         {
-            Droppable note = factory.generate(refLink, Assets.possiblePayloads.get(refLink.getRNG().nextInt(Assets.possiblePayloads.size())));
+            Droppable note = factory.generate(refLink, refLink.getRNG(), Difficulty.EASY);
             notes.add(note);
         }
 
@@ -61,8 +62,7 @@ public class PlayState extends State
     @Override
 
     public void Update() {
-        
-        if (!updateBlocked) {
+
             hero.Update();
 
             for (int i = 0; i < notes.size(); ++i) {
@@ -94,7 +94,7 @@ public class PlayState extends State
                             hero.takeDamage();
                             hero.grantPoints(-50);
                         }
-                        notes.set(i, factory.generate(refLink, Assets.possiblePayloads.get(refLink.getRNG().nextInt(Assets.possiblePayloads.size()))));
+                        notes.set(i, factory.generate(refLink, refLink.getRNG(), Difficulty.EASY));
                     }
                     if (hero.isDead()) {
                         hero.grantPoints(hero.getHP() * 200);
@@ -103,11 +103,11 @@ public class PlayState extends State
                     }
                 }
                 if (note.getY() > refLink.GetHeight() - 200) {
-                    notes.set(i, factory.generate(refLink, Assets.possiblePayloads.get(refLink.getRNG().nextInt(Assets.possiblePayloads.size()))));
+                    notes.set(i, factory.generate(refLink, refLink.getRNG(), Difficulty.EASY));
                 }
             }
         }
-    }
+
     //}
 
     /*! \fn public void Draw(Graphics g)
@@ -117,7 +117,6 @@ public class PlayState extends State
      */
     @Override
     public void Draw(Graphics g) {
-        if (!drawBlocked) {
             map.Draw(g);
             hero.Draw(g);
             level1.Draw(g);
@@ -126,4 +125,4 @@ public class PlayState extends State
             }
         }
     }
-}
+
