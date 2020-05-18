@@ -1,7 +1,8 @@
 package PaooGame.States;
 
-import java.awt.*;
 import PaooGame.RefLinks;
+
+import java.awt.*;
 
 /*! \class State
     \brief Implementeaza notiunea abstracta de stare a jocului/programului.
@@ -31,13 +32,7 @@ public abstract class State
     public static void SetState(State state)
     {
         previousState = currentState;
-        if(previousState!=null) {
-            previousState.blockDraw();
-            previousState.blockUpdate();
-        }
         currentState = state;
-        currentState.unblockDraw();
-        currentState.unblockUpdate();
     }
 
     public static State GetState()
@@ -52,23 +47,4 @@ public abstract class State
 
     public static State GetPreviousState(){ return previousState; }
 
-    public void unblockUpdate()
-    {
-        updateBlocked=false;
-    }
-
-    public void blockUpdate()
-    {
-        updateBlocked=true;
-    }
-
-    public void unblockDraw()
-    {
-        drawBlocked=false;
-    }
-
-    public void blockDraw()
-    {
-        drawBlocked=true;
-    }
 }
