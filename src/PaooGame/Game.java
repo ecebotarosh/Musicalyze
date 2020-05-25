@@ -5,6 +5,7 @@ import PaooGame.Graphics.Assets;
 import PaooGame.Input.KeyManager;
 import PaooGame.Input.MouseManager;
 import PaooGame.States.*;
+import PaooGame.UI.UIManager;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -67,6 +68,7 @@ public class Game implements Runnable
     private State settingsState;        /*!< Referinta catre setari.*/
     private State aboutState;           /*!< Referinta catre about.*/
     private State pausedState;
+    private UIManager uiManager;
     private KeyManager keyManager;      /*!< Referinta catre obiectul care gestioneaza intrarile din partea utilizatorului.*/
     private RefLinks refLink;            /*!< Referinta catre un obiect a carui sarcina este doar de a retine diverse referinte pentru a fi usor accesibile.*/
     private MouseManager mouseManager;
@@ -90,8 +92,11 @@ public class Game implements Runnable
             /// Resetarea flagului runState ce indica starea firului de executie (started/stoped)
         runState = false;
             ///Construirea obiectului de gestiune a evenimentelor de tastatura
+        refLink = new RefLinks(this);
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
+        uiManager=new UIManager(refLink);
+        mouseManager.setUiManager(uiManager);
     }
 
     /*! \fn private void init()
@@ -319,6 +324,10 @@ public class Game implements Runnable
         return this.playState;
     }
 
+    public State getMenuState() { return this.menuState; }
+
+    public State getSettingsState() { return this.settingsState; }
+
     public State getPausedState()
     {
         return this.pausedState;
@@ -331,6 +340,10 @@ public class Game implements Runnable
     public MouseManager GetMouseManager()
     {
         return mouseManager;
+    }
+
+    public UIManager GetUIManager() {
+        return uiManager;
     }
 }
 

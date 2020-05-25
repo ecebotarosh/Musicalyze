@@ -1,5 +1,7 @@
 package PaooGame.Input;
 
+import PaooGame.UI.UIManager;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -8,10 +10,15 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 
     private boolean leftPressed, rightPressed;
     private int mouseX, mouseY;
+    private UIManager uiManager;
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
 
+    }
+
+    public void setUiManager(UIManager uiManager) {
+        this.uiManager = uiManager;
     }
 
     public boolean isLeftPressed() {
@@ -52,6 +59,10 @@ public class MouseManager implements MouseListener, MouseMotionListener {
         {
             rightPressed=false;
         }
+        if(uiManager!=null)
+        {
+            uiManager.onMouseRelease(mouseEvent);
+        }
     }
 
     @Override
@@ -73,5 +84,9 @@ public class MouseManager implements MouseListener, MouseMotionListener {
     public void mouseMoved(MouseEvent mouseEvent) {
         mouseX=mouseEvent.getX();
         mouseY=mouseEvent.getY();
+        if(uiManager!=null)
+        {
+            uiManager.onMouseMove(mouseEvent);
+        }
     }
 }

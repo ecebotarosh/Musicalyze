@@ -35,6 +35,10 @@ public class Assets
     public static BufferedImage damagedHP;
     public static BufferedImage bomb;
     public static BufferedImage bonus;
+    public static BufferedImage newGame;
+    public static BufferedImage loadGame;
+    public static BufferedImage settings;
+    public static BufferedImage about;
     public static ArrayList<String> possiblePayloads = new ArrayList<>();
     public static ArrayList<String> possibleNotePayloads = new ArrayList<>();
 
@@ -75,6 +79,10 @@ public class Assets
         damagedHP = ImageLoader.LoadImage("/textures/emptyHeart.png");
         bomb = ImageLoader.LoadImage("/textures/testbomb.png");
         bonus = ImageLoader.LoadImage("/textures/bonus.png");
+        newGame=ImageLoader.LoadImage("/textures/NewGame.png");
+        loadGame=ImageLoader.LoadImage("/textures/LoadGame.png");
+        settings=ImageLoader.LoadImage("/textures/Settings.png");
+        about=ImageLoader.LoadImage("/textures/About.png");
         possiblePayloads.add("Do");
         possiblePayloads.add("Re");
         possiblePayloads.add("Mi");
