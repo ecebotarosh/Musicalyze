@@ -3,8 +3,8 @@ package PaooGame;
 import PaooGame.GameWindow.GameWindow;
 import PaooGame.Graphics.Assets;
 import PaooGame.Input.KeyManager;
+import PaooGame.Input.MouseManager;
 import PaooGame.States.*;
-import PaooGame.Tiles.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -69,8 +69,7 @@ public class Game implements Runnable
     private State pausedState;
     private KeyManager keyManager;      /*!< Referinta catre obiectul care gestioneaza intrarile din partea utilizatorului.*/
     private RefLinks refLink;            /*!< Referinta catre un obiect a carui sarcina este doar de a retine diverse referinte pentru a fi usor accesibile.*/
-
-    private Tile tile; /*!< variabila membra temporara. Este folosita in aceasta etapa doar pentru a desena ceva pe ecran.*/
+    private MouseManager mouseManager;
 
     /*! \fn public Game(String title, int width, int height)
         \brief Constructor de initializare al clasei Game.
@@ -92,6 +91,7 @@ public class Game implements Runnable
         runState = false;
             ///Construirea obiectului de gestiune a evenimentelor de tastatura
         keyManager = new KeyManager();
+        mouseManager = new MouseManager();
     }
 
     /*! \fn private void init()
@@ -107,6 +107,10 @@ public class Game implements Runnable
         wnd.BuildGameWindow();
             ///Sa ataseaza ferestrei managerul de tastatura pentru a primi evenimentele furnizate de fereastra.
         wnd.GetWndFrame().addKeyListener(keyManager);
+        wnd.GetWndFrame().addMouseListener(mouseManager);
+        wnd.GetWndFrame().addMouseMotionListener(mouseManager);
+        wnd.GetCanvas().addMouseListener(mouseManager);
+        wnd.GetCanvas().addMouseMotionListener(mouseManager);
             ///Se incarca toate elementele grafice (dale)
         Assets.Init();
             ///Se construieste obiectul de tip shortcut ce va retine o serie de referinte catre elementele importante din program.
@@ -117,7 +121,7 @@ public class Game implements Runnable
         settingsState   = new SettingsState(refLink);
         aboutState      = new AboutState(refLink);
             ///Seteaza starea implicita cu care va fi lansat programul in executie
-        State.SetState(playState);
+        State.SetState(menuState);
     }
 
     /*! \fn public void run()
@@ -139,7 +143,7 @@ public class Game implements Runnable
         final double timeFrame      = 1000000000 / framesPerSecond; /*!< Durata unui frame in nanosecunde.*/
 
             /// Atat timp timp cat threadul este pornit Update() & Draw()
-        while (runState == true)
+        while (runState)
         {
                 /// Se obtine timpul curent
             curentTime = System.nanoTime();
@@ -163,7 +167,7 @@ public class Game implements Runnable
      */
     public synchronized void StartGame()
     {
-        if(runState == false)
+        if(!runState)
         {
                 /// Se actualizeaza flagul de stare a threadului
             runState = true;
@@ -187,7 +191,7 @@ public class Game implements Runnable
      */
     public synchronized void StopGame()
     {
-        if(runState == true)
+        if(runState)
         {
                 /// Actualizare stare thread
             runState = false;
@@ -318,6 +322,15 @@ public class Game implements Runnable
     public State getPausedState()
     {
         return this.pausedState;
+    }
+
+    public GameWindow getWnd() {
+        return wnd;
+    }
+
+    public MouseManager GetMouseManager()
+    {
+        return mouseManager;
     }
 }
 
