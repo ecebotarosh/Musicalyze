@@ -1,6 +1,7 @@
 package PaooGame.States;
 
 import PaooGame.RefLinks;
+import PaooGame.UI.UIManager;
 
 import java.awt.*;
 
@@ -19,7 +20,8 @@ public class SettingsState extends State
     public SettingsState(RefLinks refLink)
     {
             ///Apel al construcotrului clasei de baza.
-        super(refLink);
+            super(refLink);
+            uiManager=new UIManager(refLink);
     }
 
     /*! \fn public void Update()
@@ -28,7 +30,7 @@ public class SettingsState extends State
     @Override
     public void Update()
     {
-
+        uiManager.Update();
     }
 
     /*! \fn public void Draw(Graphics g)
@@ -39,6 +41,6 @@ public class SettingsState extends State
     @Override
     public void Draw(Graphics g)
     {
-
+        uiManager.Draw(g);
     }
 }
