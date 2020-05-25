@@ -44,7 +44,17 @@ public class PlayState extends State
         map = new Map();
             ///Referinta catre harta construita este setata si in obiectul shortcut pentru a fi accesibila si in alte clase ale programului.
         refLink.SetMap(map);
-        notes = new ArrayList<>(6);
+        restartGame();
+    }
+
+    private void restartGame() {
+        if(notes!=null)
+        {
+            notes.clear();
+        }
+        else {
+            notes = new ArrayList<>(6);
+        }
         level1 = new Goal(Assets.lvl1sheet);
         level1.addTarget("Do");
         level1.addTarget("Re");
@@ -60,8 +70,9 @@ public class PlayState extends State
             notes.add(note);
         }
 
-            ///Construieste eroul
+        ///Construieste eroul
         hero = new Hero(refLink,440, 430);
+        hero.grantPoints(-hero.getScore());
     }
 
     /*! \fn public void Update()
@@ -87,16 +98,15 @@ public class PlayState extends State
                         System.out.println("Got an intersection!");
                         System.out.println(note.getPayload());
                         if (note.getPayload().equalsIgnoreCase("Bomb")) {
-                            System.out.println("Got a bomb! Have to die now!");
                             hero.die();
                         } else if (note.getPayload().equalsIgnoreCase("Bonus")) {
-                            System.out.println("COME GET HEALED!");
                             hero.heal();
                             hero.grantPoints(100);
                         } else if (level1.isNeededPayload(note.getPayload())) {
                             hero.grantPoints(300);
                             if (level1.goalReached()) {
                                 System.out.println("Game finished!");
+                                State.SetState(refLink.GetGame().getMenuState());
                             }
                         } else {
                             hero.takeDamage();
@@ -134,5 +144,10 @@ public class PlayState extends State
             }
             uiManager.Draw(g);
         }
+
+    @Override
+    public void resetState() {
+        restartGame();
     }
+}
 

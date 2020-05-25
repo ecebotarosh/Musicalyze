@@ -38,4 +38,10 @@ public class AboutState extends State
     {
 
     }
+
+    @Override
+    public void resetState()
+    {
+
+    }
 }

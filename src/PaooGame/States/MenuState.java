@@ -27,6 +27,7 @@ public class MenuState extends State
             @Override
             public void onClick() {
                 System.out.println("Clicked new game");
+                refLink.GetGame().getPlayState().resetState();
                 State.SetState(refLink.GetGame().getPlayState());
             }
         });
@@ -34,7 +35,9 @@ public class MenuState extends State
             @Override
             public void onClick() {
                 System.out.println("Clicked load game");
+
                 State.SetState(refLink.GetGame().getPlayState());
+
             }
         });
 
@@ -75,6 +78,10 @@ public class MenuState extends State
         uiManager.Draw(g);
     }
 
+    @Override
+    public void resetState() {
+
+    }
 
 
 }

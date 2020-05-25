@@ -19,9 +19,9 @@ public abstract class State
     private static State currentState   = null; /*!< Referinta catre starea curenta a jocului: game, meniu, settings, about etc.*/
     protected UIManager uiManager;
     protected static RefLinks refLink;
-    public State(RefLinks refLink)
+    public State(RefLinks newRefLink)
     {
-        this.refLink = refLink;
+        refLink = newRefLink;
     }
 
     /*! \fn public static void SetState(State state)
@@ -51,4 +51,6 @@ public abstract class State
     public UIManager getUiManager() {
         return uiManager;
     }
+
+    public abstract void resetState();
 }

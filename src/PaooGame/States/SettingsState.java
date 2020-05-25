@@ -82,4 +82,9 @@ public class SettingsState extends State
         int str_y = refLink.GetHeight()/8 - metrics.getHeight() / 2 + metrics.getAscent();
         g.drawString("Choose difficulty : ", str_x, str_y);
     }
+
+    @Override
+    public void resetState() {
+        
+    }
 }
