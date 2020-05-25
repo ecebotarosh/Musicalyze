@@ -1,6 +1,7 @@
 package PaooGame;
 
-import PaooGame.GameWindow.GameWindow;
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.support.ConnectionSource;
 
 public class Main
 {
@@ -8,5 +9,14 @@ public class Main
     {
         Game paooGame = new Game("Musicalyze", 1024, 640);
         paooGame.StartGame();
+        String dbUrl ="jdbc:sqlite:db/Musicalyze.db";
+
+        try {
+            ConnectionSource connectionSource = new JdbcConnectionSource(dbUrl);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

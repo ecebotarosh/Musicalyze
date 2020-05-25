@@ -39,6 +39,7 @@ public class Assets
     public static BufferedImage loadGame;
     public static BufferedImage settings;
     public static BufferedImage about;
+    public static BufferedImage back;
     public static ArrayList<String> possiblePayloads = new ArrayList<>();
     public static ArrayList<String> possibleNotePayloads = new ArrayList<>();
 
@@ -83,6 +84,7 @@ public class Assets
         loadGame=ImageLoader.LoadImage("/textures/LoadGame.png");
         settings=ImageLoader.LoadImage("/textures/Settings.png");
         about=ImageLoader.LoadImage("/textures/About.png");
+        back = ImageLoader.LoadImage("/textures/Back.png");
         possiblePayloads.add("Do");
         possiblePayloads.add("Re");
         possiblePayloads.add("Mi");

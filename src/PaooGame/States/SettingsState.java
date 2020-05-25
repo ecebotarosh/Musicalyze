@@ -1,6 +1,8 @@
 package PaooGame.States;
 
+import PaooGame.Graphics.Assets;
 import PaooGame.RefLinks;
+import PaooGame.UI.UIImageButton;
 import PaooGame.UI.UIManager;
 
 import java.awt.*;
@@ -22,6 +24,12 @@ public class SettingsState extends State
             ///Apel al construcotrului clasei de baza.
             super(refLink);
             uiManager=new UIManager(refLink);
+            uiManager.addObject(new UIImageButton(Assets.back, refLink.GetWidth()-200, refLink.GetHeight()-200, 150, 50) {
+                @Override
+                public void onClick() {
+                    State.SetState(refLink.GetGame().getMenuState());
+                }
+            });
     }
 
     /*! \fn public void Update()
