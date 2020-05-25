@@ -1,6 +1,7 @@
 package PaooGame.States;
 
 import PaooGame.RefLinks;
+import PaooGame.UI.UIManager;
 
 import java.awt.*;
 
@@ -16,13 +17,12 @@ public abstract class State
         ///Urmatoarele atribute sunt statice pentru a evita dealocarea spatiului de memorie la trecerea dintr-o stare in alta.
     private static State previousState  = null; /*!< Referinta catre starea anterioara a jocului.*/
     private static State currentState   = null; /*!< Referinta catre starea curenta a jocului: game, meniu, settings, about etc.*/
-    protected RefLinks refLink;
+    protected UIManager uiManager;
+    protected static RefLinks refLink;
     public State(RefLinks refLink)
     {
         this.refLink = refLink;
     }
-    protected boolean updateBlocked=true;
-    protected boolean drawBlocked=true;
 
     /*! \fn public static void SetState(State state)
         \brief Seteaza starea curenta a jocului.
@@ -33,6 +33,7 @@ public abstract class State
     {
         previousState = currentState;
         currentState = state;
+        refLink.GetMouseManager().setUiManager(currentState.getUiManager());
     }
 
     public static State GetState()
@@ -47,4 +48,7 @@ public abstract class State
 
     public static State GetPreviousState(){ return previousState; }
 
+    public UIManager getUiManager() {
+        return uiManager;
+    }
 }

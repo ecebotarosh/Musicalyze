@@ -95,8 +95,6 @@ public class Game implements Runnable
         refLink = new RefLinks(this);
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
-        uiManager=new UIManager(refLink);
-        mouseManager.setUiManager(uiManager);
     }
 
     /*! \fn private void init()

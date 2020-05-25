@@ -13,7 +13,6 @@ import java.awt.*;
  */
 public class MenuState extends State
 {
-    private UIManager uiManager;
     /*! \fn public MenuState(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
 
@@ -23,7 +22,7 @@ public class MenuState extends State
     {
             ///Apel al constructorului clasei de baza.
         super(refLink);
-        uiManager=refLink.GetGame().GetUIManager();
+        uiManager=new UIManager(refLink);
         uiManager.addObject(new UIImageButton(Assets.newGame, refLink.GetWidth()/2-75, 100, 150, 50) {
             @Override
             public void onClick() {
@@ -75,5 +74,7 @@ public class MenuState extends State
     {
         uiManager.Draw(g);
     }
+
+
 
 }
