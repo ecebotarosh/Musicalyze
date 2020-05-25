@@ -3,6 +3,7 @@ package PaooGame;
 import PaooGame.Input.KeyManager;
 import PaooGame.Input.MouseManager;
 import PaooGame.Maps.Map;
+import PaooGame.Settings.Difficulty;
 
 import java.util.Random;
 
@@ -15,6 +16,7 @@ public class RefLinks
 {
     private Game game;          /*!< Referinta catre obiectul Game.*/
     private Map map;            /*!< Referinta catre harta curenta.*/
+    private Difficulty difficulty;
 
     private Random r = new Random(System.currentTimeMillis());
 
@@ -26,6 +28,7 @@ public class RefLinks
     public RefLinks(Game game)
     {
         this.game = game;
+        difficulty = Difficulty.MEDIUM;
     }
 
     /*! \fn public KeyManager GetKeyManager()
@@ -95,5 +98,12 @@ public class RefLinks
         return this.r;
     }
 
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
 
+    public Difficulty getDifficulty()
+    {
+        return difficulty;
+    }
 }

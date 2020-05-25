@@ -13,6 +13,7 @@ public class Main
 
         try {
             ConnectionSource connectionSource = new JdbcConnectionSource(dbUrl);
+            connectionSource.close();
         }
         catch(Exception e)
         {

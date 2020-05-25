@@ -7,7 +7,8 @@ import PaooGame.Items.Goal;
 import PaooGame.Items.Hero;
 import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
-import PaooGame.Settings.Difficulty;
+import PaooGame.UI.UIImageButton;
+import PaooGame.UI.UIManager;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -32,6 +33,13 @@ public class PlayState extends State
     {
             ///Apel al constructorului clasei de baza
         super(refLink);
+        uiManager=new UIManager(refLink);
+        uiManager.addObject(new UIImageButton(Assets.back, refLink.GetWidth()-210, refLink.GetHeight()-75, 100, 50) {
+            @Override
+            public void onClick() {
+                State.SetState(refLink.GetGame().getMenuState());
+            }
+        });
             ///Construieste harta jocului
         map = new Map();
             ///Referinta catre harta construita este setata si in obiectul shortcut pentru a fi accesibila si in alte clase ale programului.
@@ -48,7 +56,7 @@ public class PlayState extends State
         level1.addTarget("Do");
         for(int i=0; i<6; ++i)
         {
-            Droppable note = factory.generate(refLink, refLink.getRNG(), Difficulty.EASY);
+            Droppable note = factory.generate(refLink, refLink.getRNG(), refLink.getDifficulty());
             notes.add(note);
         }
 
@@ -62,7 +70,7 @@ public class PlayState extends State
     @Override
 
     public void Update() {
-
+            uiManager.Update();
             hero.Update();
 
             for (int i = 0; i < notes.size(); ++i) {
@@ -94,7 +102,7 @@ public class PlayState extends State
                             hero.takeDamage();
                             hero.grantPoints(-50);
                         }
-                        notes.set(i, factory.generate(refLink, refLink.getRNG(), Difficulty.EASY));
+                        notes.set(i, factory.generate(refLink, refLink.getRNG(), refLink.getDifficulty()));
                     }
                     if (hero.isDead()) {
                         hero.grantPoints(hero.getHP() * 200);
@@ -103,7 +111,7 @@ public class PlayState extends State
                     }
                 }
                 if (note.getY() > refLink.GetHeight() - 200) {
-                    notes.set(i, factory.generate(refLink, refLink.getRNG(), Difficulty.EASY));
+                    notes.set(i, factory.generate(refLink, refLink.getRNG(), refLink.getDifficulty()));
                 }
             }
         }
@@ -117,12 +125,14 @@ public class PlayState extends State
      */
     @Override
     public void Draw(Graphics g) {
+
             map.Draw(g);
             hero.Draw(g);
             level1.Draw(g);
             for (Droppable note : notes) {
                 note.Draw(g);
             }
+            uiManager.Draw(g);
         }
     }
 

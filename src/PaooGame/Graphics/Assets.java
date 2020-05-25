@@ -40,6 +40,9 @@ public class Assets
     public static BufferedImage settings;
     public static BufferedImage about;
     public static BufferedImage back;
+    public static BufferedImage easy;
+    public static BufferedImage medium;
+    public static BufferedImage hard;
     public static ArrayList<String> possiblePayloads = new ArrayList<>();
     public static ArrayList<String> possibleNotePayloads = new ArrayList<>();
 
@@ -85,6 +88,9 @@ public class Assets
         settings=ImageLoader.LoadImage("/textures/Settings.png");
         about=ImageLoader.LoadImage("/textures/About.png");
         back = ImageLoader.LoadImage("/textures/Back.png");
+        easy = ImageLoader.LoadImage("/textures/Easy.png");
+        medium = ImageLoader.LoadImage("/textures/Medium.png");
+        hard = ImageLoader.LoadImage("/textures/Hard.png");
         possiblePayloads.add("Do");
         possiblePayloads.add("Re");
         possiblePayloads.add("Mi");
