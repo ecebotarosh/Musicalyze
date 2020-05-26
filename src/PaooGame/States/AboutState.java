@@ -1,6 +1,9 @@
 package PaooGame.States;
 
+import PaooGame.Graphics.Assets;
 import PaooGame.RefLinks;
+import PaooGame.UI.UIImageButton;
+import PaooGame.UI.UIManager;
 
 import java.awt.*;
 
@@ -18,6 +21,13 @@ public class AboutState extends State
     {
             ///Apel al constructorului clasei de baza.
         super(refLink);
+        uiManager=new UIManager(refLink);
+        uiManager.addObject(new UIImageButton(Assets.back, refLink.GetWidth()-150, refLink.GetHeight()-100, 100, 50) {
+            @Override
+            public void onClick() {
+                State.SetState(refLink.GetGame().getMenuState());
+            }
+        });
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a meniu about.
@@ -36,7 +46,8 @@ public class AboutState extends State
     @Override
     public void Draw(Graphics g)
     {
-
+        g.drawImage(Assets.aboutText, 0, 0, refLink.GetWidth(), refLink.GetHeight(), null);
+        uiManager.Draw(g);
     }
 
     @Override

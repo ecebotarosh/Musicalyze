@@ -12,21 +12,7 @@ import java.util.ArrayList;
 public class Assets
 {
         /// Referinte catre elementele grafice (dale) utilizate in joc.
-    public static BufferedImage heroLeft;
     public static Font font = new Font("Arial Black", Font.BOLD, 20);
-    public static BufferedImage heroRight;
-    public static BufferedImage soil;
-    public static BufferedImage grass;
-    public static BufferedImage mountain;
-    public static BufferedImage townGrass;
-    public static BufferedImage townGrassDestroyed;
-    public static BufferedImage townSoil;
-    public static BufferedImage water;
-    public static BufferedImage rockUp;
-    public static BufferedImage rockDown;
-    public static BufferedImage rockLeft;
-    public static BufferedImage rockRight;
-    public static BufferedImage tree;
     public static BufferedImage accordeon;
     public static BufferedImage background;
     public static BufferedImage lvl1sheet;
@@ -43,6 +29,7 @@ public class Assets
     public static BufferedImage easy;
     public static BufferedImage medium;
     public static BufferedImage hard;
+    public static BufferedImage aboutText;
     public static ArrayList<String> possiblePayloads = new ArrayList<>();
     public static ArrayList<String> possibleNotePayloads = new ArrayList<>();
 
@@ -56,24 +43,8 @@ public class Assets
      */
     public static void Init()
     {
-            /// Se creaza temporar un obiect SpriteSheet initializat prin intermediul clasei ImageLoader
-        SpriteSheet sheet = new SpriteSheet(ImageLoader.LoadImage("/textures/PaooGameSpriteSheet.png"));
 
-            /// Se obtin subimaginile corespunzatoare elementelor necesare.
-        grass = sheet.crop(0, 0);
-        soil = sheet.crop(1, 0);
-        water = sheet.crop(2, 0);
-        mountain = sheet.crop(3, 0);
-        townGrass = sheet.crop(0, 1);
-        townGrassDestroyed = sheet.crop(1, 1);
-        townSoil = sheet.crop(2, 1);
-        tree = sheet.crop(3, 1);
-        heroLeft = sheet.crop(0, 2);
-        heroRight = sheet.crop(1, 2);
-        rockUp = sheet.crop(2, 2);
-        rockDown = sheet.crop(3, 2);
-        rockLeft = sheet.crop(0, 3);
-        rockRight = sheet.crop(1, 3);
+
 
         accordeon = ImageLoader.LoadImage("/textures/accordeon.png");
         background = ImageLoader.LoadImage("/textures/bg.png");
@@ -91,6 +62,7 @@ public class Assets
         easy = ImageLoader.LoadImage("/textures/Easy.png");
         medium = ImageLoader.LoadImage("/textures/Medium.png");
         hard = ImageLoader.LoadImage("/textures/Hard.png");
+        aboutText = ImageLoader.LoadImage("/textures/AboutText.png");
         possiblePayloads.add("Do");
         possiblePayloads.add("Re");
         possiblePayloads.add("Mi");

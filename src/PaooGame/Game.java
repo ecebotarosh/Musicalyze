@@ -72,6 +72,7 @@ public class Game implements Runnable
     private KeyManager keyManager;      /*!< Referinta catre obiectul care gestioneaza intrarile din partea utilizatorului.*/
     private RefLinks refLink;            /*!< Referinta catre un obiect a carui sarcina este doar de a retine diverse referinte pentru a fi usor accesibile.*/
     private MouseManager mouseManager;
+    private String connectionString;
 
     /*! \fn public Game(String title, int width, int height)
         \brief Constructor de initializare al clasei Game.
@@ -83,7 +84,7 @@ public class Game implements Runnable
         \param width Latimea ferestrei in pixeli.
         \param height Inaltimea ferestrei in pixeli.
      */
-    public Game(String title, int width, int height)
+    public Game(String title, int width, int height, String connectionString)
     {
             /// Obiectul GameWindow este creat insa fereastra nu este construita
             /// Acest lucru va fi realizat in metoda init() prin apelul
@@ -92,9 +93,10 @@ public class Game implements Runnable
             /// Resetarea flagului runState ce indica starea firului de executie (started/stoped)
         runState = false;
             ///Construirea obiectului de gestiune a evenimentelor de tastatura
-        refLink = new RefLinks(this);
+        refLink = new RefLinks(this, connectionString);
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
+        this.connectionString=connectionString;
     }
 
     /*! \fn private void init()
@@ -117,7 +119,10 @@ public class Game implements Runnable
             ///Se incarca toate elementele grafice (dale)
         Assets.Init();
             ///Se construieste obiectul de tip shortcut ce va retine o serie de referinte catre elementele importante din program.
-        refLink = new RefLinks(this);
+        if(refLink!=null)
+        {
+            refLink = new RefLinks(this, connectionString);
+        }
             ///Definirea starilor programului
         playState       = new PlayState(refLink);
         menuState       = new MenuState(refLink);
@@ -342,6 +347,14 @@ public class Game implements Runnable
 
     public UIManager GetUIManager() {
         return uiManager;
+    }
+
+    public String getConnectionString() {
+        return connectionString;
+    }
+
+    public void setConnectionString(String connectionString) {
+        this.connectionString = connectionString;
     }
 }
 

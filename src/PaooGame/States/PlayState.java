@@ -72,7 +72,6 @@ public class PlayState extends State
 
         ///Construieste eroul
         hero = new Hero(refLink,440, 430);
-        hero.grantPoints(-hero.getScore());
     }
 
     /*! \fn public void Update()

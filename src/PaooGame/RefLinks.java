@@ -1,5 +1,7 @@
 package PaooGame;
 
+import PaooGame.DBConnection.DBManager;
+import PaooGame.DBConnection.GameTable;
 import PaooGame.Input.KeyManager;
 import PaooGame.Input.MouseManager;
 import PaooGame.Maps.Map;
@@ -17,18 +19,23 @@ public class RefLinks
     private Game game;          /*!< Referinta catre obiectul Game.*/
     private Map map;            /*!< Referinta catre harta curenta.*/
     private Difficulty difficulty;
+    private GameTable gameTable;
+    private DBManager dbManager;
 
-    private Random r = new Random(System.currentTimeMillis());
+    private Random r;
 
     /*! \fn public RefLinks(Game game)
         \brief Constructorul de initializare al clasei.
 
         \param game Referinta catre obiectul game.
      */
-    public RefLinks(Game game)
+    public RefLinks(Game game, String connectionString)
     {
         this.game = game;
+        dbManager = new DBManager(this, connectionString);
         difficulty = Difficulty.MEDIUM;
+        dbManager.initializeGame();
+        r = new Random(System.currentTimeMillis());
     }
 
     /*! \fn public KeyManager GetKeyManager()
@@ -99,11 +106,25 @@ public class RefLinks
     }
 
     public void setDifficulty(Difficulty difficulty) {
+        dbManager.changeDifficulty(difficulty);
         this.difficulty = difficulty;
     }
 
     public Difficulty getDifficulty()
     {
         return difficulty;
+    }
+
+    public GameTable getGameInTable() {
+        return gameTable;
+    }
+
+    public void setGameInTable(GameTable gameTable) {
+        this.gameTable = gameTable;
+    }
+
+    public Long getGameInTableId()
+    {
+        return gameTable.getGameId();
     }
 }

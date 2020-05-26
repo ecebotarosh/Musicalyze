@@ -167,4 +167,15 @@ public class Hero extends Character
     {
         return this.score;
     }
+
+    public void setHP(int hp)
+    {
+        this.HP=hp;
+    }
+
+    public void setScore(int score)
+    {
+        this.score=score;
+    }
+
 }
